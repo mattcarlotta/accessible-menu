@@ -37,6 +37,7 @@ export default function Menu({
         className="text-xl my-2"
         aria-controls={`${title}-menu`}
         aria-expanded={menuOpen}
+        aria-haspopup={true}
         onClick={handleToggleMenu}
       >
         <span className="pr-4">{title}</span>
