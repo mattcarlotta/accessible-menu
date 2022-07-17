@@ -49,7 +49,6 @@ export default class FocusTrapper extends Component<
       ).filter((element) => isFocusable(element as AccessibleElement))
 
       this.tabbableItems = tabbableItems as Array<HTMLElement>
-      this.setState({ tabIndex: 0 })
     }
   }
 
