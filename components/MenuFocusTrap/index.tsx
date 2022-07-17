@@ -31,24 +31,16 @@ export default class FocusTrapper extends Component<
 
   componentDidUpdate(
     prevProps: FocusTrapperProps,
-    prevState: FocusTrapperState
+    _prevState: FocusTrapperState
   ) {
-    const { tabIndex } = this.state
     const { menuOpen } = this.props
-    if (tabIndex !== prevState.tabIndex && this.tabbableItems.length > 0) {
-      this.tabbableItems[tabIndex]?.focus()
-    }
 
-    if (
-      this.focusTrapRef.current &&
-      menuOpen &&
-      menuOpen !== prevProps.menuOpen
-    ) {
-      this.handleInit()
+    if (this.focusTrapRef.current && menuOpen !== prevProps.menuOpen) {
+      this.initTababbleElements()
     }
   }
 
-  handleInit = () => {
+  initTababbleElements = () => {
     if (this.focusTrapRef.current) {
       const tabbableItems = Array.from(
         this.focusTrapRef.current.querySelectorAll(
@@ -65,39 +57,41 @@ export default class FocusTrapper extends Component<
     this.setState({ tabIndex: 0 })
   }
 
+  focusOnTab = (tabIndex: number) => {
+    this.tabbableItems[tabIndex]?.focus()
+    this.setState({ tabIndex })
+  }
+
   handleFocusTrap = (event: KeyboardEvent<HTMLElement>) => {
+    if (!this.props.menuOpen) return
     const { key } = event
-    if (key === 'Enter') {
-      this.handleInit()
+    const { tabIndex } = this.state
+    const arrowUpKey = key === 'ArrowUp'
+    const arrowDownKey = key === 'ArrowDown'
+    const escKey = key === 'Escape' || key === 'Esc'
+    const tabKey = key === 'Tab'
+    const tabItemsLength = this.tabbableItems.length - 1
+    let nextTabIndex = -1
+
+    if (arrowUpKey) {
+      event.preventDefault()
+      nextTabIndex = tabIndex - 1 < 0 ? 0 : tabIndex - 1
+    } else if (arrowDownKey) {
+      event.preventDefault()
+      nextTabIndex =
+        tabIndex + 1 > tabItemsLength ? tabItemsLength : tabIndex + 1
+    } else if (tabKey) {
+      this.resetTabIndex()
+      return
+    } else if (escKey) {
+      event.stopPropagation()
+      this.focusOnTab(0)
+      this.props.onEscapePress()
       return
     }
 
-    const arrowUp = key === 'ArrowUp'
-    const arrowDown = key === 'ArrowDown'
-    const escKey = key === 'Escape' || key === 'Esc'
-    const tabPress = key === 'Tab'
-    const tabItemsLength = this.tabbableItems.length - 1
-
-    if (arrowUp) {
-      event.preventDefault()
-      this.setState((prevState) => ({
-        tabIndex: prevState.tabIndex - 1 < 0 ? 0 : prevState.tabIndex - 1
-      }))
-    } else if (arrowDown) {
-      event.preventDefault()
-      this.setState((prevState) => ({
-        tabIndex:
-          prevState.tabIndex + 1 > tabItemsLength
-            ? tabItemsLength
-            : prevState.tabIndex + 1
-      }))
-    } else if (tabPress) {
-      this.resetTabIndex()
-    } else if (escKey) {
-      event.stopPropagation()
-      this.tabbableItems[0]?.focus()
-      this.resetTabIndex()
-      this.props.onEscapePress()
+    if (nextTabIndex >= 0) {
+      this.focusOnTab(nextTabIndex)
     }
   }
 
