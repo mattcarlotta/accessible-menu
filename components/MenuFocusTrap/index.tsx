@@ -44,7 +44,12 @@ export default class FocusTrapper extends Component<
         this.focusTrapRef.current.querySelectorAll(
           ACCESSIBLE_ELEMENTS.join(',')
         )
-      ).filter((element) => isFocusable(element as AccessibleElement))
+      ).filter((element) =>
+        isFocusable(element as AccessibleElement, {
+          ignoreTabIndex: true,
+          ignoreHrefAttr: true
+        })
+      )
 
       this.tabbableItems = tabbableItems as Array<HTMLElement>
     }
