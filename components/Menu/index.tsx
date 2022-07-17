@@ -33,10 +33,10 @@ export default function Menu({
     >
       <button
         type="button"
-        id="menubutton"
+        id={`${title}-menu-button`}
         className="text-xl my-2"
-        aria-haspopup="false"
-        aria-controls="menu"
+        aria-controls={`${title}-menu`}
+        aria-expanded={menuOpen}
         onClick={handleToggleMenu}
       >
         <span className="pr-4">{title}</span>
@@ -48,7 +48,11 @@ export default function Menu({
         />
       </button>
       {menuOpen && (
-        <ul id="menu" role="menu" aria-labelledby="menubutton">
+        <ul
+          id={`${title}-menu`}
+          role="menu"
+          aria-labelledby={`${title}-menu-button`}
+        >
           {options.map(({ href, title }) => (
             <li key={title} role="presentation" className="p-2">
               <Link href={href}>
