@@ -33,9 +33,7 @@ export default class FocusTrapper extends Component<
     prevProps: FocusTrapperProps,
     _prevState: FocusTrapperState
   ) {
-    const { menuOpen } = this.props
-
-    if (this.focusTrapRef.current && menuOpen !== prevProps.menuOpen) {
+    if (this.props.menuOpen !== prevProps.menuOpen) {
       this.initTababbleElements()
     }
   }
@@ -52,10 +50,6 @@ export default class FocusTrapper extends Component<
     }
   }
 
-  resetTabIndex = () => {
-    this.setState({ tabIndex: 0 })
-  }
-
   focusOnTab = (tabIndex: number) => {
     this.tabbableItems[tabIndex]?.focus()
     this.setState({ tabIndex })
@@ -70,27 +64,25 @@ export default class FocusTrapper extends Component<
     const escKey = key === 'Escape' || key === 'Esc'
     const tabKey = key === 'Tab'
     const tabItemsLength = this.tabbableItems.length - 1
-    let nextTabIndex = -1
 
     if (arrowUpKey) {
       event.preventDefault()
-      nextTabIndex = tabIndex - 1 < 0 ? 0 : tabIndex - 1
+      this.focusOnTab(tabIndex - 1 < 0 ? 0 : tabIndex - 1)
+      return
     } else if (arrowDownKey) {
       event.preventDefault()
-      nextTabIndex =
+      this.focusOnTab(
         tabIndex + 1 > tabItemsLength ? tabItemsLength : tabIndex + 1
+      )
+      return
     } else if (tabKey) {
-      this.resetTabIndex()
+      this.setState({ tabIndex: 0 })
       return
     } else if (escKey) {
       event.stopPropagation()
       this.focusOnTab(0)
       this.props.onEscapePress()
       return
-    }
-
-    if (nextTabIndex >= 0) {
-      this.focusOnTab(nextTabIndex)
     }
   }
 
