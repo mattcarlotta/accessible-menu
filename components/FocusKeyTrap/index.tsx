@@ -34,6 +34,7 @@ export default function FocusKeyTrap({
   }
 
   const handleFocusTrap = (event: KeyboardEvent<HTMLElement>) => {
+    if (!menuOpen) return
     switch (event.key) {
       case 'ArrowUp':
         event.preventDefault()
