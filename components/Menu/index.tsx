@@ -2,7 +2,7 @@ import clsx from 'clsx'
 import Link from 'next/link'
 import { useState } from 'react'
 import Chevron from '../Chevron'
-import FocusTrapper from '../MenuFocusTrap'
+import FocusTrap from '../FocusTrap'
 
 export default function Menu({
   title,
@@ -17,20 +17,12 @@ export default function Menu({
     setMenuOpen((p) => !p)
   }
 
-  const handleMenuOpen = () => {
-    setMenuOpen(true)
-  }
-
   const handleMenuClose = () => {
     setMenuOpen(false)
   }
 
   return (
-    <FocusTrapper
-      menuOpen={menuOpen}
-      onEnterPress={handleMenuOpen}
-      onEscapePress={handleMenuClose}
-    >
+    <FocusTrap onEscapePress={handleMenuClose} rebuildTabList={[menuOpen]}>
       <button
         type="button"
         id={`${title}-menu-button`}
@@ -65,6 +57,6 @@ export default function Menu({
           ))}
         </ul>
       )}
-    </FocusTrapper>
+    </FocusTrap>
   )
 }

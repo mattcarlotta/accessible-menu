@@ -13,7 +13,6 @@ export type FocusTrapperProps = {
   children: ReactNode
   className?: string
   onEscapePress: () => void
-  onEnterPress: () => void
   menuOpen: boolean
 }
 
