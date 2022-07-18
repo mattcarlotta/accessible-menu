@@ -1,7 +1,7 @@
 import type { NextPage } from 'next'
 import Head from 'next/head'
 import Image from 'next/image'
-import Menu from '../components/Menu'
+import CollapsibleMenu from '../components/CollapsibleMenu'
 import styles from '../styles/Home.module.css'
 
 const Home: NextPage = () => {
@@ -18,7 +18,7 @@ const Home: NextPage = () => {
           Welcome to <a href="https://nextjs.org">Next.js!</a>
         </h1>
 
-        <Menu
+        <CollapsibleMenu
           title="Info"
           options={[
             { href: '/our-story/', title: 'Our Story' },
@@ -26,7 +26,7 @@ const Home: NextPage = () => {
             { href: '/reviews/', title: 'Reviews' }
           ]}
         />
-        <Menu
+        <CollapsibleMenu
           title="Shop"
           options={[
             { href: '/icontinence/', title: 'Incontinence' },
@@ -34,7 +34,7 @@ const Home: NextPage = () => {
             { href: '/nutrition/', title: 'Nutrition' }
           ]}
         />
-        <Menu
+        <CollapsibleMenu
           title="Help"
           options={[
             { href: '/privacy/', title: 'Privacy' },

@@ -1,10 +1,5 @@
 import { useEffect, useRef, useState } from 'react'
-import type {
-  AccessibleElement,
-  DependencyList,
-  KeyboardEvent,
-  ReactNode
-} from '../../types'
+import type { AccessibleElement, KeyboardEvent, ReactNode } from '../../types'
 import {
   ACCESSIBLE_ELEMENTS,
   isFocusable
@@ -19,35 +14,19 @@ export type FocusTrapProps = {
   className?: string
   onEscapePress: () => void
   focusOnMount?: boolean
-  rebuildTabList: DependencyList
+  menuOpen: boolean
 }
 
-export default function FocusTrap({
+export default function FocusKeyTrap({
   children,
   className,
   onEscapePress,
   focusOnMount = false,
-  rebuildTabList
+  menuOpen
 }: FocusTrapProps) {
   const [tabIndex, setTabIndex] = useState(0)
   const focusTrapRef = useRef<HTMLDivElement | null>(null)
   const tabbableItemsRef = useRef<Array<HTMLElement>>([])
-
-  const initTababbleElements = () => {
-    if (focusTrapRef.current) {
-      const tabbableItems = Array.from(
-        focusTrapRef.current.querySelectorAll(ACCESSIBLE_ELEMENTS.join(','))
-      ).filter((element) =>
-        isFocusable(element as AccessibleElement, {
-          ignoreTabIndex: true,
-          ignoreHrefAttr: true
-        })
-      )
-
-      tabbableItemsRef.current = tabbableItems as Array<HTMLElement>
-      if (focusOnMount) tabbableItemsRef.current[0]?.focus()
-    }
-  }
 
   const focusOnTab = (tabIndex: number) => {
     tabbableItemsRef.current?.[tabIndex]?.focus()
@@ -82,9 +61,20 @@ export default function FocusTrap({
   }
 
   useEffect(() => {
-    initTababbleElements()
-    /* eslint-disable-next-line react-hooks/exhaustive-deps */
-  }, rebuildTabList)
+    if (focusTrapRef.current) {
+      const tabbableItems = Array.from(
+        focusTrapRef.current.querySelectorAll(ACCESSIBLE_ELEMENTS.join(','))
+      ).filter((element) =>
+        isFocusable(element as AccessibleElement, {
+          ignoreTabIndex: true,
+          ignoreHrefAttr: true
+        })
+      )
+
+      tabbableItemsRef.current = tabbableItems as Array<HTMLElement>
+      if (focusOnMount) tabbableItemsRef.current[0]?.focus()
+    }
+  }, [menuOpen, focusOnMount])
 
   return (
     <div
