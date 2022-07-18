@@ -2,7 +2,7 @@ import KeyIcon from '../KeyIcon'
 
 export default function Instructions() {
   return (
-    <div className="bg-gray bg-opacity-30 p-2 my-8">
+    <div className="bg-gray bg-opacity-30 p-4 my-8">
       <p>
         Press&nbsp;
         <KeyIcon height="4em" width="4em">
@@ -59,7 +59,7 @@ export default function Instructions() {
         <KeyIcon height="4em" width="4em">
           Esc
         </KeyIcon>
-        (or left mouse click) to close the menu.
+        (or left mouse click on the menu title) to close the menu.
       </p>
     </div>
   )

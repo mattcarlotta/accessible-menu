@@ -24,6 +24,7 @@ export function Menu({
       className={className}
       role="menu"
       aria-labelledby={`${id}-button`}
+      aria-orientation="vertical"
     >
       {children}
     </ul>
@@ -76,7 +77,6 @@ export default function CollapsibleMenu({
         className="text-xl my-2"
         aria-controls={titleMenu}
         aria-expanded={menuOpen}
-        aria-haspopup={true}
         onClick={handleToggleMenu}
       >
         <span className="pr-4">{title}</span>
