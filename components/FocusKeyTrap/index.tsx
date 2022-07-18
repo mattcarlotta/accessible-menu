@@ -34,8 +34,6 @@ export default function FocusKeyTrap({
   }
 
   const handleFocusTrap = (event: KeyboardEvent<HTMLElement>) => {
-    const tabItemsLength = tabbableItemsRef.current.length - 1
-
     switch (event.key) {
       case 'ArrowUp':
         event.preventDefault()
@@ -43,6 +41,7 @@ export default function FocusKeyTrap({
         break
       case 'ArrowDown':
         event.preventDefault()
+        const tabItemsLength = tabbableItemsRef.current.length - 1
         focusOnTab(
           tabIndex.current + 1 > tabItemsLength
             ? tabItemsLength
