@@ -24,9 +24,10 @@ export type InferNextProps<T> = Filter<
   { props: any }
 >['props']
 
-export interface AccessibleElement extends HTMLElement {
+export interface AccessibleNode extends Node {
   readonly type?: string
   readonly href?: string
   readonly disabled?: boolean
   readonly rel?: string
+  readonly tabIndex?: number
 }

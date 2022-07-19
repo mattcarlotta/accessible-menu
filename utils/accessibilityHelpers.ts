@@ -1,10 +1,15 @@
-import type { AccessibleElement } from '../types'
+import type { AccessibleNode } from '../types'
 
-export const ACCESSIBLE_ELEMENTS = ['a', 'button:not(:disabled)', '[tabindex]']
+export const ACCESSIBLE_NODES = ['a', 'button:not(:disabled)', '[tabindex]']
 
-export function isFocusable(
-  element: AccessibleElement,
-  options: { ignoreTabIndex?: boolean; ignoreHrefAttr?: boolean } = {}
+export type NodeIsFocusableOptions = {
+  ignoreTabIndex?: boolean
+  ignoreHrefAttr?: boolean
+}
+
+export function nodeIsAccessible(
+  element: AccessibleNode,
+  options: NodeIsFocusableOptions = {}
 ) {
   const { disabled, href, nodeName, rel, tabIndex, type } = element
 
@@ -22,4 +27,13 @@ export function isFocusable(
     default:
       return false
   }
+}
+
+export default function findAccessibleNodes(
+  nodes: NodeListOf<Element>,
+  options?: NodeIsFocusableOptions
+) {
+  return Array.from(nodes).filter((node) =>
+    nodeIsAccessible(node, options)
+  ) as HTMLElement[]
 }

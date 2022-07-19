@@ -65,12 +65,24 @@ export default function CollapsibleMenu({
     setMenuOpen((p) => !p)
   }
 
+  const handleMenuOpen = () => {
+    setMenuOpen(true)
+  }
+
   const handleMenuClose = () => {
     setMenuOpen(false)
   }
 
   return (
-    <FocusKeyTrap menuOpen={menuOpen} onEscapePress={handleMenuClose}>
+    <FocusKeyTrap
+      menuOpen={menuOpen}
+      onEscapePress={handleMenuClose}
+      onKeyPressOpenMenu={handleMenuOpen}
+      options={{
+        ignoreHrefAttr: true,
+        ignoreTabIndex: true
+      }}
+    >
       <button
         type="button"
         id={`${titleMenu}-button`}
