@@ -16,7 +16,7 @@ export default function SummaryMenu({
       </summary>
       <ul>
         {options.map(({ href, title }) => (
-          <li key={title} className="p-2">
+          <li key={title} className="py-0.5 pl-2">
             <a
               role="button"
               className="inline-block py-2"
