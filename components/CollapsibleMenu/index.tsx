@@ -43,7 +43,11 @@ export function MenuItem({
   return (
     <li key={title} role="presentation" className={className}>
       <Link href={href}>
-        <a className="hover:underline" tabIndex={-1} role="menuitem">
+        <a
+          className="hover:underline focus:underline"
+          tabIndex={-1}
+          role="menuitem"
+        >
           {title}
         </a>
       </Link>
@@ -52,13 +56,15 @@ export function MenuItem({
 }
 
 export default function CollapsibleMenu({
+  defaultOpen = false,
   title,
   options
 }: {
+  defaultOpen?: boolean
   title: string
   options: Array<{ href: string; title: string }>
 }) {
-  const [menuOpen, setMenuOpen] = useState(false)
+  const [menuOpen, setMenuOpen] = useState(defaultOpen)
   const titleMenu = `${title}-menu`.toLowerCase()
 
   const handleToggleMenu = () => {

@@ -16,7 +16,7 @@ export default function Instructions() {
         <KeyIcon height="4em" width="4em">
           Tab
         </KeyIcon>
-        navigate across the collapsible menus.
+        to navigate across the collapsible menus.
       </div>
       <div>
         <strong>When a menu is closed:</strong>
